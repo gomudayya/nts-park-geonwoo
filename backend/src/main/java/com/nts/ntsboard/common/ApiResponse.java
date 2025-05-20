@@ -1,7 +1,7 @@
 package com.nts.ntsboard.common;
 
 public record ApiResponse<T>(
-        boolean success,
+        boolean isSuccess,
         int statusCode,
         T data,
         ErrorPayload error
