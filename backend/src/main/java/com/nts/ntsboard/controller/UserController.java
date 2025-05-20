@@ -2,7 +2,7 @@ package com.nts.ntsboard.controller;
 
 import com.nts.ntsboard.common.ApiResponse;
 import com.nts.ntsboard.controller.request.SignUpRequest;
-import com.nts.ntsboard.controller.response.SignUpResponse;
+import com.nts.ntsboard.controller.response.UserResponse;
 import com.nts.ntsboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<SignUpResponse> signUp(@RequestBody SignUpRequest signupRequest) {
+    public ApiResponse<UserResponse> signUp(@RequestBody SignUpRequest signupRequest) {
         return ApiResponse.success(userService.signUp(signupRequest), 201);
     }
 }

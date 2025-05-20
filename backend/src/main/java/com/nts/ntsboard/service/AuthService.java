@@ -1,7 +1,7 @@
 package com.nts.ntsboard.service;
 
 import com.nts.ntsboard.controller.request.LoginRequest;
-import com.nts.ntsboard.controller.response.SignUpResponse;
+import com.nts.ntsboard.controller.response.UserResponse;
 import com.nts.ntsboard.domain.User;
 import com.nts.ntsboard.exception.InvalidLoginException;
 import com.nts.ntsboard.repository.UserRepository;
@@ -17,13 +17,13 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SignUpResponse login(LoginRequest loginRequest, HttpSession httpSession) {
+    public UserResponse login(LoginRequest loginRequest, HttpSession httpSession) {
         User user = userRepository.findByUsername(loginRequest.username());
         if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
             throw new InvalidLoginException();
         }
 
         httpSession.setAttribute("userId", user.getId());
-        return SignUpResponse.from(user);
+        return UserResponse.from(user);
     }
 }
