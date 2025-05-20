@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { signUp } from '@/api/index';
+
 export default {
   data() {
     return {
@@ -49,8 +51,20 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      // 회원가입 API 호출 ...
+    async submitForm() {
+      const request = {
+        username: this.username,
+        password: this.password,
+        nickname: this.nickname,
+      };
+      await signUp(request);
+      this.initForm();
+      this.$router.push('/signup-success');
+    },
+    initForm() {
+      this.username = '';
+      this.password = '';
+      this.nickname = '';
     },
   },
 };
