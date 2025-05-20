@@ -1,5 +1,8 @@
 package com.nts.ntsboard.common;
 
+import com.nts.ntsboard.common.exception.ErrorCode;
+import com.nts.ntsboard.common.exception.ErrorPayload;
+
 public record ApiResponse<T>(
         boolean isSuccess,
         int statusCode,

@@ -1,4 +1,4 @@
-package com.nts.ntsboard.common;
+package com.nts.ntsboard.common.exception;
 
 public abstract class BusinessException extends RuntimeException {
     private final ErrorCode errorCode;

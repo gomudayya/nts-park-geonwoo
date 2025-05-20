@@ -1,4 +1,4 @@
-package com.nts.ntsboard.common;
+package com.nts.ntsboard.common.exception;
 
 public record ErrorPayload(String code, String message) {
 }
