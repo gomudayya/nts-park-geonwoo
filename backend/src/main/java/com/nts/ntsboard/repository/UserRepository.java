@@ -6,6 +6,8 @@ import com.nts.ntsboard.repository.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
@@ -15,8 +17,7 @@ public class UserRepository {
         return userJpaRepository.save(UserEntity.from(user)).toModel();
     }
 
-    public User findByUsername(String username) {
-        return userJpaRepository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("유저")).toModel();
+    public Optional<User> findByUsername(String username) {
+        return userJpaRepository.findByUsername(username).map(UserEntity::toModel);
     }
 }

@@ -18,7 +18,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse login(LoginRequest loginRequest, HttpSession httpSession) {
-        User user = userRepository.findByUsername(loginRequest.username());
+        User user = userRepository.findByUsername(loginRequest.username())
+                .orElseThrow(InvalidLoginException::new);
+
         if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
             throw new InvalidLoginException();
         }
