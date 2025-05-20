@@ -3,11 +3,11 @@ package com.nts.ntsboard.common;
 public record ApiResponse<T>(
         boolean isSuccess,
         int statusCode,
-        T data,
+        T content,
         ErrorPayload error
 ) {
-    public static <T> ApiResponse<T> success(T data, int statusCode) {
-        return new ApiResponse<>(true, statusCode, data, null);
+    public static <T> ApiResponse<T> success(T content, int statusCode) {
+        return new ApiResponse<>(true, statusCode, content, null);
     }
 
     public static <T> ApiResponse<T> fail(ErrorCode errorCode) {
