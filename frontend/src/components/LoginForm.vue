@@ -22,24 +22,48 @@
           required
         />
       </div>
-
+      <p v-if="logMessage" class="message error">
+        {{ logMessage }}
+      </p>
       <button type="submit" class="button">로그인</button>
     </form>
   </div>
 </template>
 
 <script>
+import { login } from '@/api/index';
+
 export default {
   data() {
     return {
       username: '',
       password: '',
+      logMessage: '',
     };
   },
   methods: {
-    submitForm() {
-      // TODO: 로그인 API 호출
-      console.log('로그인:', this.username, this.password);
+    async submitForm() {
+      const request = {
+        username: this.username,
+        password: this.password,
+      };
+
+      try {
+        const { data } = await login(request);
+        this.$store.commit('setNickname', data.content.nickname);
+        this.$router.push('/');
+        this.init();
+      } catch (e) {
+        console.error(e);
+        this.logMessage = '회원정보가 올바르지 않습니다.';
+        this.password = '';
+      }
+    },
+
+    init() {
+      this.username = '';
+      this.password = '';
+      this.logMessage = '';
     },
   },
 };
@@ -69,5 +93,18 @@ input {
   font-size: 1rem;
   border: 1px solid #bbb;
   border-radius: 4px;
+}
+
+.message.error {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 600;
+  word-break: keep-all;
+  background-color: #f8d7da; /* 연한 빨간색 배경 */
+  color: #721c24; /* 진한 빨간색 글자색 */
+  border-color: #f5c6cb;
 }
 </style>

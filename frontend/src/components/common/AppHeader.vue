@@ -1,15 +1,29 @@
 <template>
   <header class="header">
     <router-link to="/" class="logo">NTS-BOARD</router-link>
-    <div class="auth-buttons">
-      <router-link to="/login" class="header-button">로그인</router-link>
-      <router-link to="/signup" class="header-button">회원가입</router-link>
+    <div class="auth-container">
+      <template v-if="nickname">
+        <span class="nickname">👋{{ nickname }}님 안녕하세요?</span>
+        <a href="javascript:;" @click="logoutUser" class="header-button">
+          로그아웃
+        </a>
+      </template>
+      <template v-else>
+        <router-link to="/login" class="header-button">로그인</router-link>
+        <router-link to="/signup" class="header-button">회원가입</router-link>
+      </template>
     </div>
   </header>
 </template>
 
 <script>
-export default {};
+import { mapState } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['nickname']),
+  },
+};
 </script>
 
 <style scoped>
@@ -18,15 +32,15 @@ export default {};
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #222; /* 어두운 배경 */
+  background-color: #222;
 }
 .logo {
   font-size: 24px;
   font-weight: 900;
-  color: #7cfc00; /* 연두색 */
+  color: #7cfc00;
   text-decoration: none;
 }
-.auth-buttons {
+.auth-container {
   display: flex;
   gap: 12px;
 }
@@ -36,11 +50,16 @@ export default {};
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 4px;
-  background-color: rgba(124, 252, 0, 0.2); /* 연두색 반투명 배경 */
+  background-color: rgba(124, 252, 0, 0.2);
   transition: background-color 0.3s ease;
 }
 .header-button:hover {
-  background-color: #7cfc00; /* 연두색 배경 */
+  background-color: #7cfc00;
   color: black;
+}
+.nickname {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
 }
 </style>

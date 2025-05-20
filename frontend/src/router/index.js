@@ -15,6 +15,10 @@ const router = createRouter({
       path: '/login',
       component: () => import('@/views/LoginPage.vue'),
     },
+    {
+      path: '/signup-success',
+      component: () => import('@/views/SignupSuccess.vue'),
+    },
   ],
 });
 
