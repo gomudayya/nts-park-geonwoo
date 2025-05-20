@@ -5,6 +5,8 @@ import com.nts.ntsboard.controller.response.UserResponse;
 import com.nts.ntsboard.domain.User;
 import com.nts.ntsboard.exception.InvalidLoginException;
 import com.nts.ntsboard.repository.UserRepository;
+import com.nts.ntsboard.util.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +18,9 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserResponse login(LoginRequest loginRequest, HttpSession httpSession) {
+    public UserResponse login(LoginRequest loginRequest, HttpServletResponse response) {
         User user = userRepository.findByUsername(loginRequest.username())
                 .orElseThrow(InvalidLoginException::new);
 
@@ -25,7 +28,8 @@ public class AuthService {
             throw new InvalidLoginException();
         }
 
-        httpSession.setAttribute("userId", user.getId());
+        String token = jwtUtil.createToken(user.getId());
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
         return UserResponse.from(user);
     }
 }

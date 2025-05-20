@@ -4,6 +4,7 @@ import com.nts.ntsboard.common.ApiResponse;
 import com.nts.ntsboard.controller.request.LoginRequest;
 import com.nts.ntsboard.controller.response.UserResponse;
 import com.nts.ntsboard.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpSession httpSession) {
-        return ApiResponse.success(authService.login(loginRequest, httpSession), 200);
+    public ApiResponse<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        return ApiResponse.success(authService.login(loginRequest, response), 200);
     }
 }
