@@ -10,7 +10,12 @@ public record ApiResponse<T>(
         return new ApiResponse<>(true, statusCode, data, null);
     }
 
-    public static <T> ApiResponse<T> failure(ErrorPayload error, int statusCode) {
-        return new ApiResponse<>(false, statusCode, null, error);
+    public static <T> ApiResponse<T> fail(ErrorCode errorCode) {
+        ErrorPayload errorPayload = new ErrorPayload(errorCode.name(), errorCode.getMessage());
+        return new ApiResponse<>(false, errorCode.getStatusCode(), null, errorPayload);
+    }
+
+    public static <T> ApiResponse<T> fail(ErrorPayload errorPayload, int statusCode) {
+        return new ApiResponse<>(false, statusCode, null, errorPayload);
     }
 }

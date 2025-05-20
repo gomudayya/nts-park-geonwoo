@@ -1,4 +1,4 @@
 package com.nts.ntsboard.common;
 
-public record ErrorPayload(String message, String errorCode) {
+public record ErrorPayload(String errorCode, String errorMessage) {
 }
