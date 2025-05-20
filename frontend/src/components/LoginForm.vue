@@ -23,7 +23,7 @@
         />
       </div>
 
-      <button type="submit">로그인</button>
+      <button type="submit" class="button">로그인</button>
     </form>
   </div>
 </template>
@@ -69,19 +69,5 @@ input {
   font-size: 1rem;
   border: 1px solid #bbb;
   border-radius: 4px;
-}
-button {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1.1rem;
-  color: black;
-  font-weight: 700;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-button:hover {
-  background-color: #5ec800;
 }
 </style>

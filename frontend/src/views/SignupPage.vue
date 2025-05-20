@@ -22,7 +22,7 @@ export default {
 }
 
 .signup-wrapper > h2 {
-  font-size: 2.5rem; /* 원하는 크기로 조절 가능 */
-  margin-bottom: 40px; /* 간격 유지 */
+  font-size: 2.5rem;
+  margin-bottom: 40px;
 }
 </style>
