@@ -32,19 +32,4 @@ export default {};
   display: flex;
   gap: 12px;
 }
-
-.btn {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 4px;
-  background-color: rgba(124, 252, 0, 0.2); /* 연두색 반투명 배경 */
-  transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #7cfc00; /* 연두색 배경 */
-  color: black;
-}
 </style>
