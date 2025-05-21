@@ -13,8 +13,9 @@ import lombok.Getter;
 @Table(
         name = "likes",
         indexes = {
-                @Index(name = "idx_user_id", columnList = "user_id"),
-                @Index(name = "idx_post_id", columnList = "board_id")
+                // 복합인덱스 컬럼순서 중요함. board_id 조건으로 게시글 좋아요 갯수 세야하니 board_Id가 먼저와야함.
+                @Index(name = "idx_board_user", columnList = "board_id, user_id"),
+                @Index(name = "idx_user_id", columnList = "user_id")
         }
 )
 public class BoardLikeEntity {
