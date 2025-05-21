@@ -2,10 +2,11 @@ package com.nts.ntsboard.repository;
 
 import com.nts.ntsboard.domain.Board;
 import com.nts.ntsboard.domain.Hashtag;
+import com.nts.ntsboard.exception.NotFoundException;
 import com.nts.ntsboard.repository.entity.BoardEntity;
 import com.nts.ntsboard.repository.entity.BoardHashtagEntity;
 import com.nts.ntsboard.repository.entity.HashtagEntity;
-import com.nts.ntsboard.repository.jpa.BoardHashtagRepository;
+import com.nts.ntsboard.repository.jpa.BoardHashtagJpaRepository;
 import com.nts.ntsboard.repository.jpa.BoardJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardRepository {
     private final BoardJpaRepository boardJpaRepository;
-    private final BoardHashtagRepository boardHashtagRepository;
+    private final BoardHashtagJpaRepository boardHashtagJpaRepository;
 
     public Board save(Board board) {
         //게시글 저장
@@ -28,7 +29,18 @@ public class BoardRepository {
                 .map(hashtag -> BoardHashtagEntity.link(boardEntity, HashtagEntity.from(hashtag)))
                 .toList();
 
-        boardHashtagRepository.saveAll(links);
+        boardHashtagJpaRepository.saveAll(links);
         return boardEntity.toModel(hashtags);
+    }
+
+    public Board findById(Long boardId) {
+        List<Hashtag> hashtags = boardHashtagJpaRepository.findAllHashtagByBoardId(boardId).stream()
+                .map(HashtagEntity::toModel)
+                .toList();
+        return boardJpaRepository.findById(boardId).orElseThrow(() -> new NotFoundException("게시글")).toModel(hashtags);
+    }
+
+    public void deleteAllHashtags(Long boardId) {
+        boardHashtagJpaRepository.deleteAllByBoardId(boardId);
     }
 }

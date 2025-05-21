@@ -39,4 +39,14 @@ public class Board {
     public List<String> getHashtagNames() {
         return hashtags.stream().map(Hashtag::getTagName).toList();
     }
+
+    public boolean isCreatedBy(Long userId) {
+        return this.getWriter().getId().equals(userId);
+    }
+
+    public void update(String title, String content, List<Hashtag> hashtags) {
+        this.title = title;
+        this.content = content;
+        this.hashtags = hashtags;
+    }
 }

@@ -1,10 +1,11 @@
 package com.nts.ntsboard.service;
 
-import com.nts.ntsboard.controller.request.BoardCreateRequest;
+import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.domain.Board;
 import com.nts.ntsboard.domain.Hashtag;
 import com.nts.ntsboard.domain.User;
+import com.nts.ntsboard.exception.AccessDeniedException;
 import com.nts.ntsboard.repository.BoardRepository;
 import com.nts.ntsboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,27 @@ public class BoardService {
     private final HashtagService hashtagService;
 
     @Transactional
-    public BoardDetailResponse createBoard(Long writerId, BoardCreateRequest request) {
+    public BoardDetailResponse createBoard(Long writerId, BoardWriteRequest request) {
         User writer = userRepository.findById(writerId);
         List<Hashtag> hashtags = hashtagService.syncHashtags(request.hashtags());
 
         Board board = Board.createBoard(writer, request.title(), request.content(), hashtags);
         board = boardRepository.save(board);
+        return BoardDetailResponse.from(board);
+    }
+
+    @Transactional
+    public BoardDetailResponse updateBoard(Long userId, Long boardId, BoardWriteRequest request) {
+        Board board = boardRepository.findById(boardId);
+        if (!board.isCreatedBy(userId)) {
+            throw new AccessDeniedException();
+        }
+
+        boardRepository.deleteAllHashtags(boardId);
+        List<Hashtag> hashtags = hashtagService.syncHashtags(request.hashtags());
+        board.update(request.title(), request.content(), hashtags);
+
+        boardRepository.save(board);
         return BoardDetailResponse.from(board);
     }
 }
