@@ -4,7 +4,7 @@ import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.controller.response.BoardSummaryResponse;
-import com.nts.ntsboard.controller.response.BoardTotalCountResponse;
+import com.nts.ntsboard.controller.response.CountResponse;
 import com.nts.ntsboard.domain.Board;
 import com.nts.ntsboard.domain.Hashtag;
 import com.nts.ntsboard.domain.User;
@@ -79,8 +79,8 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public BoardTotalCountResponse getBoardCount() {
+    public CountResponse getBoardCount() {
         long count = boardRepository.count();
-        return BoardTotalCountResponse.from(count);
+        return CountResponse.from(count);
     }
 }

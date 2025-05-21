@@ -26,4 +26,8 @@ public class CommentRepository {
         Slice<CommentEntity> commentEntities = commentJpaRepository.findByBoardId(boardId, pageable);
         return commentEntities.map(CommentEntity::toModel);
     }
+
+    public long count() {
+        return commentJpaRepository.count();
+    }
 }

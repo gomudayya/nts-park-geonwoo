@@ -3,6 +3,7 @@ package com.nts.ntsboard.service;
 import com.nts.ntsboard.common.response.SliceResponse;
 import com.nts.ntsboard.controller.request.CommentWriteRequest;
 import com.nts.ntsboard.controller.response.CommentResponse;
+import com.nts.ntsboard.controller.response.CountResponse;
 import com.nts.ntsboard.domain.Comment;
 import com.nts.ntsboard.domain.User;
 import com.nts.ntsboard.exception.AccessDeniedException;
@@ -62,5 +63,11 @@ public class CommentService {
         Slice<Comment> commentSlice = commentRepository.findSliceByBoardId(boardId, pageable);
         Slice<CommentResponse> responseSlice = commentSlice.map(CommentResponse::from);
         return SliceResponse.from(responseSlice);
+    }
+
+    @Transactional(readOnly = true)
+    public CountResponse getCommentCount() {
+        long count = commentRepository.count();
+        return CountResponse.from(count);
     }
 }
