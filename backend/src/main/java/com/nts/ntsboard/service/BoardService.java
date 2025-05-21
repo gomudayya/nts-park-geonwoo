@@ -1,7 +1,9 @@
 package com.nts.ntsboard.service;
 
+import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
+import com.nts.ntsboard.controller.response.BoardSummaryResponse;
 import com.nts.ntsboard.domain.Board;
 import com.nts.ntsboard.domain.Hashtag;
 import com.nts.ntsboard.domain.User;
@@ -9,6 +11,10 @@ import com.nts.ntsboard.exception.AccessDeniedException;
 import com.nts.ntsboard.repository.BoardRepository;
 import com.nts.ntsboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,10 +62,18 @@ public class BoardService {
         boardRepository.deleteById(boardId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public BoardDetailResponse getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId);
         board.increaseViewCount();
         return BoardDetailResponse.from(board);
+    }
+
+    @Transactional(readOnly = true)
+    public PageResponse<BoardSummaryResponse> getBoardByPage() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id")); // 최신순, 10개
+        Page<Board> boardPage = boardRepository.findPage(pageable);
+        Page<BoardSummaryResponse> responsePage = boardPage.map(board -> BoardSummaryResponse.from(board, 0, 0, 0));
+        return PageResponse.from(responsePage);
     }
 }

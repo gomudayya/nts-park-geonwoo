@@ -58,4 +58,7 @@ public class Board {
         viewCount++;
     }
 
+    public String getWriterNickname() {
+        return writer.getNickname();
+    }
 }

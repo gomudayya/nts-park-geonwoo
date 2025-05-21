@@ -1,6 +1,7 @@
 package com.nts.ntsboard.repository;
 
 import com.nts.ntsboard.domain.Hashtag;
+import com.nts.ntsboard.exception.NotFoundException;
 import com.nts.ntsboard.repository.entity.HashtagEntity;
 import com.nts.ntsboard.repository.jpa.HashtagJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,10 @@ import java.util.List;
 public class HashtagRepository {
     private final HashtagJpaRepository hashtagJpaRepository;
 
+    public Hashtag findById(Long hashtagId) {
+        return hashtagJpaRepository.findById(hashtagId).orElseThrow(() -> new NotFoundException("해시태그")).toModel();
+    }
+
     public List<Hashtag> findAllByTagNameIn(List<String> tagNames) {
         List<HashtagEntity> hashtagEntities = hashtagJpaRepository.findAllByTagNameIn(tagNames);
         return hashtagEntities.stream()
@@ -24,5 +29,11 @@ public class HashtagRepository {
         List<HashtagEntity> hashtagEntities = hashtags.stream().map(HashtagEntity::from).toList();
         hashtagJpaRepository.saveAll(hashtagEntities);
         return hashtagEntities.stream().map(HashtagEntity::toModel).toList();
+    }
+
+    public List<Hashtag> findAllById(List<Long> hashtagIds) {
+        return hashtagJpaRepository.findAllById(hashtagIds).stream()
+                .map(HashtagEntity::toModel)
+                .toList();
     }
 }

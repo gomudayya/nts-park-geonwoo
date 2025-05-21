@@ -2,10 +2,13 @@ package com.nts.ntsboard.controller;
 
 import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.common.auth.AuthPrincipal;
+import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
+import com.nts.ntsboard.controller.response.BoardSummaryResponse;
 import com.nts.ntsboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,11 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ApiResponse<BoardDetailResponse> getBoard(@PathVariable Long boardId) {
         return ApiResponse.success(boardService.getBoard(boardId), 200);
+    }
+
+    @GetMapping
+    public ApiResponse<PageResponse<BoardSummaryResponse>> getBoards() {
+        return ApiResponse.success(boardService.getBoardByPage(), 200);
     }
 
     @PutMapping("/{boardId}")

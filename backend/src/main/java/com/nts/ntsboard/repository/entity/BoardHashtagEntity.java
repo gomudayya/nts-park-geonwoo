@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 
@@ -17,18 +15,14 @@ public class BoardHashtagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private BoardEntity boardEntity;
+    private Long boardId;
 
-    @ManyToOne()
-    @JoinColumn(name = "hashtag_id")
-    private HashtagEntity hashtagEntity;
+    private Long hashtagId;
 
-    public static BoardHashtagEntity link(BoardEntity boardEntity, HashtagEntity hashtagEntity) {
+    public static BoardHashtagEntity link(Long boardId, Long hashtagId) {
         BoardHashtagEntity link = new BoardHashtagEntity();
-        link.boardEntity = boardEntity;
-        link.hashtagEntity = hashtagEntity;
+        link.boardId = boardId;
+        link.hashtagId = hashtagId;
         return link;
     }
 }
