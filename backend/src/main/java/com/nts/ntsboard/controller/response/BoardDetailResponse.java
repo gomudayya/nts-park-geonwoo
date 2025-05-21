@@ -13,8 +13,8 @@ public record BoardDetailResponse(
     public static BoardDetailResponse from(Board board) {
         return new BoardDetailResponse(
                 board.getBoardId(),
-                board.getContent(),
                 board.getTitle(),
+                board.getContent(),
                 board.getHashtagNames()
         );
     }
