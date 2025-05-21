@@ -1,6 +1,6 @@
 package com.nts.ntsboard.controller;
 
-import com.nts.ntsboard.common.ApiResponse;
+import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.common.auth.AuthPrincipal;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;

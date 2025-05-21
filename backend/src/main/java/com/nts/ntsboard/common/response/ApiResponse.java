@@ -1,4 +1,4 @@
-package com.nts.ntsboard.common;
+package com.nts.ntsboard.common.response;
 
 import com.nts.ntsboard.common.exception.ErrorCode;
 import com.nts.ntsboard.common.exception.ErrorPayload;
