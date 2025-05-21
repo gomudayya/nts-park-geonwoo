@@ -7,6 +7,7 @@ import com.nts.ntsboard.controller.request.CommentWriteRequest;
 import com.nts.ntsboard.controller.response.CommentResponse;
 import com.nts.ntsboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,5 +50,13 @@ public class CommentController {
             @PathVariable Long commentId
     ) {
         return ApiResponse.success(commentService.deleteComment(userId, commentId), 200);
+    }
+
+    @GetMapping
+    public ApiResponse<SliceResponse<CommentResponse>> getComments(
+            @PathVariable Long boardId,
+            Pageable pageable
+    ) {
+        return ApiResponse.success(commentService.getCommentBySlice(boardId, pageable), 200);
     }
 }
