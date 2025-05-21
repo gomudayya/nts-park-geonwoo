@@ -2,7 +2,7 @@ package com.nts.ntsboard.controller;
 
 import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.controller.request.SignUpRequest;
-import com.nts.ntsboard.controller.response.UserResponse;
+import com.nts.ntsboard.controller.response.UserInfoResponse;
 import com.nts.ntsboard.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<UserResponse> signUp(@RequestBody @Valid SignUpRequest signupRequest) {
+    public ApiResponse<UserInfoResponse> signUp(@RequestBody @Valid SignUpRequest signupRequest) {
         return ApiResponse.success(userService.signUp(signupRequest), 201);
     }
 }
