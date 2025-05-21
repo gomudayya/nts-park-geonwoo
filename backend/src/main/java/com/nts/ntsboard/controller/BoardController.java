@@ -33,16 +33,6 @@ public class BoardController {
         return ApiResponse.success(boardService.createBoard(userId, request), 201);
     }
 
-    @GetMapping("/{boardId}")
-    public ApiResponse<BoardDetailResponse> getBoard(@PathVariable Long boardId) {
-        return ApiResponse.success(boardService.getBoard(boardId), 200);
-    }
-
-    @GetMapping
-    public ApiResponse<PageResponse<BoardSummaryResponse>> getBoards() {
-        return ApiResponse.success(boardService.getBoardByPage(), 200);
-    }
-
     @PutMapping("/{boardId}")
     public ApiResponse<BoardDetailResponse> updateBoard(@PathVariable Long boardId,
                                                         @RequestBody BoardWriteRequest request,
@@ -56,4 +46,15 @@ public class BoardController {
         boardService.deleteBoard(userId, boardId);
         return ApiResponse.success(null, 204);
     }
+
+    @GetMapping("/{boardId}")
+    public ApiResponse<BoardDetailResponse> getBoard(@PathVariable Long boardId) {
+        return ApiResponse.success(boardService.getBoard(boardId), 200);
+    }
+
+    @GetMapping
+    public ApiResponse<PageResponse<BoardSummaryResponse>> getBoards() {
+        return ApiResponse.success(boardService.getBoardByPage(), 200);
+    }
+
 }
