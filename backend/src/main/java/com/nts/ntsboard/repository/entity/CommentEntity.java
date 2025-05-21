@@ -26,6 +26,7 @@ public class CommentEntity {
     private Long boardId;
     private String content;
     private LocalDateTime createdTime;
+    private boolean isDeleted;
 
     public static CommentEntity from(Comment comment) {
         CommentEntity commentEntity = new CommentEntity();
@@ -34,6 +35,7 @@ public class CommentEntity {
         commentEntity.boardId = comment.getBoardId();
         commentEntity.content = comment.getContent();
         commentEntity.createdTime = comment.getCreatedTime();
+        commentEntity.isDeleted = comment.isDeleted();
         return commentEntity;
     }
 
@@ -44,6 +46,7 @@ public class CommentEntity {
                 .boardId(boardId)
                 .content(content)
                 .createdTime(createdTime)
+                .isDeleted(isDeleted)
                 .build();
     }
 }

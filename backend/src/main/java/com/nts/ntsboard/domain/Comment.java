@@ -12,14 +12,16 @@ public class Comment {
     private Long boardId;
     private String content;
     private LocalDateTime createdTime;
+    private boolean isDeleted;
 
     @Builder
-    public Comment(Long commentId, User writer, Long boardId, String content, LocalDateTime createdTime) {
+    public Comment(Long commentId, User writer, Long boardId, String content, LocalDateTime createdTime, boolean isDeleted) {
         this.commentId = commentId;
         this.writer = writer;
         this.boardId = boardId;
         this.content = content;
         this.createdTime = createdTime;
+        this.isDeleted = isDeleted;
     }
 
     public static Comment createComment(User writer, Long boardId, String content) {
@@ -28,6 +30,7 @@ public class Comment {
                 .boardId(boardId)
                 .content(content)
                 .createdTime((LocalDateTime.now()))
+                .isDeleted(false)
                 .build();
     }
 
@@ -45,5 +48,9 @@ public class Comment {
 
     public void update(String content) {
         this.content = content;
+    }
+
+    public void delete() {
+        isDeleted = true;
     }
 }

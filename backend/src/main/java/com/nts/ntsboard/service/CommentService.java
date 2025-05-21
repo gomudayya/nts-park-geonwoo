@@ -26,6 +26,7 @@ public class CommentService {
         comment = commentRepository.save(comment);
         return CommentResponse.from(comment);
     }
+
     @Transactional
     public CommentResponse updateComment(Long userId, Long commentId, CommentWriteRequest request) {
         Comment comment = commentRepository.findById(commentId);
@@ -34,7 +35,18 @@ public class CommentService {
         }
 
         comment.update(request.content());
+        comment = commentRepository.save(comment);
+        return CommentResponse.from(comment);
+    }
 
+    @Transactional
+    public CommentResponse deleteComment(Long userId, Long commentId) {
+        Comment comment = commentRepository.findById(commentId);
+        if (!comment.isCreatedBy(userId)) {
+            throw new AccessDeniedException();
+        }
+
+        comment.delete();
         comment = commentRepository.save(comment);
         return CommentResponse.from(comment);
     }

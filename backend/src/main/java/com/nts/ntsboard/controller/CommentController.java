@@ -2,11 +2,14 @@ package com.nts.ntsboard.controller;
 
 import com.nts.ntsboard.common.auth.AuthPrincipal;
 import com.nts.ntsboard.common.response.ApiResponse;
+import com.nts.ntsboard.common.response.SliceResponse;
 import com.nts.ntsboard.controller.request.CommentWriteRequest;
 import com.nts.ntsboard.controller.response.CommentResponse;
 import com.nts.ntsboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,5 +41,13 @@ public class CommentController {
             @RequestBody CommentWriteRequest request
     ) {
         return ApiResponse.success(commentService.updateComment(userId, commentId, request), 200);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ApiResponse<CommentResponse> deleteComment(
+            @AuthPrincipal Long userId,
+            @PathVariable Long commentId
+    ) {
+        return ApiResponse.success(commentService.deleteComment(userId, commentId), 200);
     }
 }

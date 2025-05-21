@@ -18,7 +18,7 @@ public record CommentResponse(
                 comment.getBoardId(),
                 comment.getWriterId(),
                 comment.getWriterNickname(),
-                comment.getContent(),
+                comment.isDeleted() ? "삭제된 댓글입니다." : comment.getContent(),
                 comment.getCreatedTime()
         );
     }
