@@ -25,17 +25,17 @@ public class BoardEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity writer;
-
+    private String title;
     private String content;
-
     private int viewCount;
 
     public static BoardEntity from(Board board) {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.id = board.getBoardId();
+        boardEntity.writer = UserEntity.from(board.getWriter());
+        boardEntity.title = board.getTitle();
         boardEntity.content = board.getContent();
         boardEntity.viewCount = board.getViewCount();
-        boardEntity.writer = UserEntity.from(board.getWriter());
         return boardEntity;
     }
 
@@ -43,6 +43,7 @@ public class BoardEntity {
         return Board.builder()
                 .boardId(id)
                 .writer(writer.toModel())
+                .title(title)
                 .content(content)
                 .viewCount(viewCount)
                 .hashtags(hashtags)

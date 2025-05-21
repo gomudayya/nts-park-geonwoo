@@ -25,7 +25,7 @@ public class BoardService {
         User writer = userRepository.findById(writerId);
         List<Hashtag> hashtags = hashtagService.syncHashtags(request.hashtags());
 
-        Board board = Board.createBoard(writer, request.content(), hashtags);
+        Board board = Board.createBoard(writer, request.title(), request.content(), hashtags);
         board = boardRepository.save(board);
         return BoardDetailResponse.from(board);
     }
