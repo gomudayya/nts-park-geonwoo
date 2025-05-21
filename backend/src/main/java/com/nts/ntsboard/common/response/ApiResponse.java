@@ -13,12 +13,8 @@ public record ApiResponse<T>(
         return new ApiResponse<>(true, statusCode, content, null);
     }
 
-    public static <T> ApiResponse<T> fail(ErrorCode errorCode) {
-        ErrorPayload errorPayload = new ErrorPayload(errorCode.name(), errorCode.getMessage());
+    public static <T> ApiResponse<T> fail(ErrorCode errorCode, String errorMessage) {
+        ErrorPayload errorPayload = new ErrorPayload(errorCode.name(), errorMessage);
         return new ApiResponse<>(false, errorCode.getStatusCode(), null, errorPayload);
-    }
-
-    public static <T> ApiResponse<T> fail(ErrorPayload errorPayload, int statusCode) {
-        return new ApiResponse<>(false, statusCode, null, errorPayload);
     }
 }

@@ -10,19 +10,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ApiResponse<?>> handleBindException(BindException bindException) {
+        String errorMessage = bindException.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         return ResponseEntity.status(400)
-                .body(ApiResponse.fail(ErrorCode.INVALID_INPUT_VALUE));
+                .body(ApiResponse.fail(ErrorCode.INVALID_INPUT_VALUE, errorMessage));
     }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<?>> handleBusinessException(BusinessException businessException) {
         ErrorCode errorCode = businessException.getErrorCode();
-        ErrorPayload errorPayload = new ErrorPayload(
-                errorCode.name(),
-                businessException.getMessage()
-        );
-
         return ResponseEntity.status(errorCode.getStatusCode())
-                .body(ApiResponse.fail(errorPayload, errorCode.getStatusCode()));
+                .body(ApiResponse.fail(errorCode, businessException.getMessage()));
     }
 }
