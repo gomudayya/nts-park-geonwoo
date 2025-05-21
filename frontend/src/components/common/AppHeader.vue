@@ -23,6 +23,13 @@ export default {
   computed: {
     ...mapState(['nickname']),
   },
+  methods: {
+    logoutUser() {
+      this.$store.commit('clearNickname');
+      localStorage.removeItem('accessToken');
+      this.$router.push('/');
+    },
+  },
 };
 </script>
 

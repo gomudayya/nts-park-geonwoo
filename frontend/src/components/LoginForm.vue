@@ -49,8 +49,10 @@ export default {
       };
 
       try {
-        const { data } = await login(request);
-        this.$store.commit('setNickname', data.content.nickname);
+        const response = await login(request);
+        const accessToken = response.headers['authorization'];
+        localStorage.setItem('accessToken', accessToken);
+        this.$store.commit('setNickname', response.data.content.nickname);
         this.$router.push('/');
         this.init();
       } catch (e) {

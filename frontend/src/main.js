@@ -2,8 +2,25 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
 import store from '@/store';
+import { fetchUserInfo } from '@/api';
 
-const app = createApp(App);
-app.use(router);
-app.use(store);
-app.mount('#app');
+async function initApp() {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (accessToken) {
+    try {
+      const userInfo = await fetchUserInfo();
+      store.commit('setNickname', userInfo.data.content.nickname);
+    } catch (error) {
+      console.warn('토큰 만료 또는 유효하지 않음:', error);
+      localStorage.removeItem('accessToken');
+    }
+  }
+
+  const app = createApp(App);
+  app.use(router);
+  app.use(store);
+  app.mount('#app');
+}
+
+initApp();
