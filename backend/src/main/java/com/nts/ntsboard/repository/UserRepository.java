@@ -3,6 +3,7 @@ package com.nts.ntsboard.repository;
 import com.nts.ntsboard.domain.User;
 import com.nts.ntsboard.exception.NotFoundException;
 import com.nts.ntsboard.repository.entity.UserEntity;
+import com.nts.ntsboard.repository.jpa.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,10 @@ public class UserRepository {
 
     public User save(User user) {
         return userJpaRepository.save(UserEntity.from(user)).toModel();
+    }
+
+    public User findById(Long userId) {
+        return userJpaRepository.findById(userId).orElseThrow(() -> new NotFoundException("유저")).toModel();
     }
 
     public Optional<User> findByUsername(String username) {

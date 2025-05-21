@@ -1,6 +1,6 @@
 package com.nts.ntsboard.controller;
 
-import com.nts.ntsboard.common.ApiResponse;
+import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.controller.request.SignUpRequest;
 import com.nts.ntsboard.controller.response.UserResponse;
 import com.nts.ntsboard.service.UserService;

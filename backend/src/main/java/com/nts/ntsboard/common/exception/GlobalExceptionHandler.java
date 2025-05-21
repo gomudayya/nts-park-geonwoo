@@ -1,5 +1,6 @@
-package com.nts.ntsboard.common;
+package com.nts.ntsboard.common.exception;
 
+import com.nts.ntsboard.common.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
