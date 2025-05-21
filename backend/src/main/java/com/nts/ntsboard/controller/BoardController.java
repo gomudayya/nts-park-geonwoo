@@ -1,7 +1,7 @@
 package com.nts.ntsboard.controller;
 
-import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.common.auth.AuthPrincipal;
+import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
@@ -34,16 +34,6 @@ public class BoardController {
         return ApiResponse.success(boardService.createBoard(userId, request), 201);
     }
 
-    @GetMapping("/{boardId}")
-    public ApiResponse<BoardDetailResponse> getBoard(@PathVariable Long boardId) {
-        return ApiResponse.success(boardService.getBoard(boardId), 200);
-    }
-
-    @GetMapping
-    public ApiResponse<PageResponse<BoardSummaryResponse>> getBoards() {
-        return ApiResponse.success(boardService.getBoardByPage(), 200);
-    }
-
     @PutMapping("/{boardId}")
     public ApiResponse<BoardDetailResponse> updateBoard(@PathVariable Long boardId,
                                                         @RequestBody BoardWriteRequest request,
@@ -57,4 +47,15 @@ public class BoardController {
         boardService.deleteBoard(userId, boardId);
         return ApiResponse.success(null, 204);
     }
+
+    @GetMapping("/{boardId}")
+    public ApiResponse<BoardDetailResponse> getBoard(@PathVariable Long boardId) {
+        return ApiResponse.success(boardService.getBoard(boardId), 200);
+    }
+
+    @GetMapping
+    public ApiResponse<PageResponse<BoardSummaryResponse>> getBoards(Pageable pageable) {
+        return ApiResponse.success(boardService.getBoardByPage(pageable), 200);
+    }
+
 }

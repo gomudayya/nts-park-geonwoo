@@ -9,7 +9,6 @@ import com.nts.ntsboard.repository.jpa.BoardHashtagJpaRepository;
 import com.nts.ntsboard.repository.jpa.BoardJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

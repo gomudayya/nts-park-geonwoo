@@ -6,8 +6,9 @@ import java.time.LocalDateTime;
 
 public record BoardSummaryResponse(
         Long boardId,
+        Long writerId,
         String title,
-        String writer,
+        String writerNickname,
         LocalDateTime createdTime,
         Integer commentCount,
         Integer viewCount,
@@ -16,6 +17,7 @@ public record BoardSummaryResponse(
     public static BoardSummaryResponse from(Board board, Integer commentCount, Integer viewCount, Integer likeCount) {
         return new BoardSummaryResponse(
                 board.getBoardId(),
+                board.getWriterId(),
                 board.getTitle(),
                 board.getWriterNickname(),
                 board.getCreatedTime(),

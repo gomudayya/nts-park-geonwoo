@@ -45,7 +45,7 @@ public class Board {
     }
 
     public boolean isCreatedBy(Long userId) {
-        return this.getWriter().getId().equals(userId);
+        return getWriterId().equals(userId);
     }
 
     public void update(String title, String content, List<Hashtag> hashtags) {
@@ -60,5 +60,9 @@ public class Board {
 
     public String getWriterNickname() {
         return writer.getNickname();
+    }
+
+    public Long getWriterId() {
+        return writer.getId();
     }
 }

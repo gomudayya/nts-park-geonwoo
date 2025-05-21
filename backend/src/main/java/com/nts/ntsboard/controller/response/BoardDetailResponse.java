@@ -7,6 +7,8 @@ import java.util.List;
 
 public record BoardDetailResponse(
         Long boardId,
+        Long writerId,
+        String writerNickname,
         String title,
         String content,
         List<String> hashtags,
@@ -15,6 +17,8 @@ public record BoardDetailResponse(
     public static BoardDetailResponse from(Board board) {
         return new BoardDetailResponse(
                 board.getBoardId(),
+                board.getWriterId(),
+                board.getWriterNickname(),
                 board.getTitle(),
                 board.getContent(),
                 board.getHashtagNames(),
