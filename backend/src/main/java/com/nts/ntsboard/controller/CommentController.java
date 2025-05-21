@@ -6,6 +6,7 @@ import com.nts.ntsboard.common.response.SliceResponse;
 import com.nts.ntsboard.controller.request.CommentWriteRequest;
 import com.nts.ntsboard.controller.response.CommentResponse;
 import com.nts.ntsboard.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class CommentController {
     public ApiResponse<CommentResponse> createComment(
             @AuthPrincipal Long userId,
             @PathVariable Long boardId,
-            @RequestBody CommentWriteRequest request
+            @RequestBody @Valid CommentWriteRequest request
     ) {
         return ApiResponse.success(commentService.createComment(userId, boardId, request), 201);
     }
@@ -39,7 +40,7 @@ public class CommentController {
     public ApiResponse<CommentResponse> updateComment(
             @AuthPrincipal Long userId,
             @PathVariable Long commentId,
-            @RequestBody CommentWriteRequest request
+            @RequestBody @Valid CommentWriteRequest request
     ) {
         return ApiResponse.success(commentService.updateComment(userId, commentId, request), 200);
     }
