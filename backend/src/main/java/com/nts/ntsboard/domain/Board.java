@@ -14,6 +14,7 @@ public class Board {
     private String content;
     private int viewCount;
     private List<Hashtag> hashtags;
+    private LocalDateTime createdTime;
 
     protected Board() {
     }
@@ -26,6 +27,7 @@ public class Board {
         this.content = content;
         this.viewCount = viewCount;
         this.hashtags = hashtags;
+        this.createdTime = createdTime;
     }
 
     public static Board createBoard(User writer, String title, String content, List<Hashtag> hashtags) {
@@ -34,6 +36,7 @@ public class Board {
         board.title = title;
         board.content = content;
         board.hashtags = hashtags;
+        board.createdTime = LocalDateTime.now();
         return board;
     }
 

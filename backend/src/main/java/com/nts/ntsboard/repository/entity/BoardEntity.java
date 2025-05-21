@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,7 @@ public class BoardEntity {
     private String title;
     private String content;
     private int viewCount;
+    private LocalDateTime createdTime;
 
     public static BoardEntity from(Board board) {
         BoardEntity boardEntity = new BoardEntity();
@@ -36,6 +38,7 @@ public class BoardEntity {
         boardEntity.title = board.getTitle();
         boardEntity.content = board.getContent();
         boardEntity.viewCount = board.getViewCount();
+        boardEntity.createdTime = board.getCreatedTime();
         return boardEntity;
     }
 
@@ -47,6 +50,7 @@ public class BoardEntity {
                 .content(content)
                 .viewCount(viewCount)
                 .hashtags(hashtags)
+                .createdTime(createdTime)
                 .build();
     }
 }
