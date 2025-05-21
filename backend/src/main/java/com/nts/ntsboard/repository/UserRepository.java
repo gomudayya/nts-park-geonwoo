@@ -3,6 +3,7 @@ package com.nts.ntsboard.repository;
 import com.nts.ntsboard.domain.User;
 import com.nts.ntsboard.exception.NotFoundException;
 import com.nts.ntsboard.repository.entity.UserEntity;
+import com.nts.ntsboard.repository.jpa.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

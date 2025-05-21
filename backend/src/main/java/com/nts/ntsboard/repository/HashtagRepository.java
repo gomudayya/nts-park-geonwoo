@@ -2,6 +2,7 @@ package com.nts.ntsboard.repository;
 
 import com.nts.ntsboard.domain.Hashtag;
 import com.nts.ntsboard.repository.entity.HashtagEntity;
+import com.nts.ntsboard.repository.jpa.HashtagJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

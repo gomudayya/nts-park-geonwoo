@@ -1,4 +1,4 @@
-package com.nts.ntsboard.repository;
+package com.nts.ntsboard.repository.jpa;
 
 import com.nts.ntsboard.repository.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

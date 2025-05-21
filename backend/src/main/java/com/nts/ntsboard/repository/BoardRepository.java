@@ -5,6 +5,8 @@ import com.nts.ntsboard.domain.Hashtag;
 import com.nts.ntsboard.repository.entity.BoardEntity;
 import com.nts.ntsboard.repository.entity.BoardHashtagEntity;
 import com.nts.ntsboard.repository.entity.HashtagEntity;
+import com.nts.ntsboard.repository.jpa.BoardHashtagRepository;
+import com.nts.ntsboard.repository.jpa.BoardJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
