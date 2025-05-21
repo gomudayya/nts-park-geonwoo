@@ -24,7 +24,7 @@ public class BoardService {
     @Transactional
     public BoardDetailResponse createBoard(Long writerId, BoardWriteRequest request) {
         User writer = userRepository.findById(writerId);
-        List<Hashtag> hashtags = hashtagService.syncHashtags(request.hashtags());
+        List<Hashtag> hashtags = hashtagService.findOrCreateHashtags(request.hashtags());
 
         Board board = Board.createBoard(writer, request.title(), request.content(), hashtags);
         board = boardRepository.save(board);
@@ -39,7 +39,7 @@ public class BoardService {
         }
 
         boardRepository.deleteAllHashtags(boardId);
-        List<Hashtag> hashtags = hashtagService.syncHashtags(request.hashtags());
+        List<Hashtag> hashtags = hashtagService.findOrCreateHashtags(request.hashtags());
         board.update(request.title(), request.content(), hashtags);
 
         boardRepository.save(board);
