@@ -40,6 +40,10 @@ public class BoardRepository {
         return boardJpaRepository.findById(boardId).orElseThrow(() -> new NotFoundException("게시글")).toModel(hashtags);
     }
 
+    public void deleteById(Long boardId) {
+        deleteAllHashtags(boardId);
+        boardJpaRepository.deleteById(boardId);
+    }
     public void deleteAllHashtags(Long boardId) {
         boardHashtagJpaRepository.deleteAllByBoardId(boardId);
     }

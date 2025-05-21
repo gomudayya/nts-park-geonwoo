@@ -45,4 +45,14 @@ public class BoardService {
         boardRepository.save(board);
         return BoardDetailResponse.from(board);
     }
+
+    @Transactional
+    public void deleteBoard(Long userId, Long boardId) {
+        Board board = boardRepository.findById(boardId);
+        if (!board.isCreatedBy(userId)) {
+            throw new AccessDeniedException();
+        }
+
+        boardRepository.deleteById(boardId);
+    }
 }

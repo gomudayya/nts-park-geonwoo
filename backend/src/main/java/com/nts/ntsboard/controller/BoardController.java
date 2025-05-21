@@ -6,11 +6,14 @@ import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,6 +23,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ApiResponse<BoardDetailResponse> createBoard(@RequestBody BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
@@ -31,5 +35,12 @@ public class BoardController {
                                                         @RequestBody BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
         return ApiResponse.success(boardService.updateBoard(userId, boardId, request), 200);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{boardId}")
+    public ApiResponse<Void> deleteBoard(@PathVariable Long boardId, @AuthPrincipal Long userId) {
+        boardService.deleteBoard(userId, boardId);
+        return ApiResponse.success(null, 204);
     }
 }
