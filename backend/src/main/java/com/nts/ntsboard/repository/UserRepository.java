@@ -17,6 +17,10 @@ public class UserRepository {
         return userJpaRepository.save(UserEntity.from(user)).toModel();
     }
 
+    public User findById(Long userId) {
+        return userJpaRepository.findById(userId).orElseThrow(() -> new NotFoundException("유저")).toModel();
+    }
+
     public Optional<User> findByUsername(String username) {
         return userJpaRepository.findByUsername(username).map(UserEntity::toModel);
     }

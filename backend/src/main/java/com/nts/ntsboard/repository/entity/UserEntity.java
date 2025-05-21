@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name = "users")
+@Table(name = "user")
 public class UserEntity {
 
     @Id
@@ -21,6 +21,7 @@ public class UserEntity {
     private String nickname;
     public static UserEntity from(User user) {
         UserEntity userEntity = new UserEntity();
+        userEntity.id = user.getId();
         userEntity.username = user.getUsername();
         userEntity.password = user.getPassword();
         userEntity.nickname = user.getNickname();
