@@ -49,4 +49,9 @@ public class Board {
         this.content = content;
         this.hashtags = hashtags;
     }
+
+    public void increaseViewCount() {
+        viewCount++;
+    }
+
 }

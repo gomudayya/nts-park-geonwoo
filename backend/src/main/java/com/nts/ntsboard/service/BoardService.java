@@ -59,6 +59,7 @@ public class BoardService {
     @Transactional
     public BoardDetailResponse getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId);
+        board.increaseViewCount();
         return BoardDetailResponse.from(board);
     }
 }
