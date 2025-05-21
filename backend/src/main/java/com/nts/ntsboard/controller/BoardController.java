@@ -8,6 +8,7 @@ import com.nts.ntsboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +29,11 @@ public class BoardController {
     public ApiResponse<BoardDetailResponse> createBoard(@RequestBody BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
         return ApiResponse.success(boardService.createBoard(userId, request), 201);
+    }
+
+    @GetMapping("/{boardId}")
+    public ApiResponse<BoardDetailResponse> getBoard(@PathVariable Long boardId) {
+        return ApiResponse.success(boardService.getBoard(boardId), 200);
     }
 
     @PutMapping("/{boardId}")

@@ -55,4 +55,10 @@ public class BoardService {
 
         boardRepository.deleteById(boardId);
     }
+
+    @Transactional
+    public BoardDetailResponse getBoard(Long boardId) {
+        Board board = boardRepository.findById(boardId);
+        return BoardDetailResponse.from(board);
+    }
 }
