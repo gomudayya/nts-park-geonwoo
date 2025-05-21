@@ -70,8 +70,8 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public PageResponse<BoardSummaryResponse> getBoardByPage() {
-        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id")); // 최신순, 10개
+    public PageResponse<BoardSummaryResponse> getBoardByPage(Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "id"));
         Page<Board> boardPage = boardRepository.findPage(pageable);
         Page<BoardSummaryResponse> responsePage = boardPage.map(board -> BoardSummaryResponse.from(board, 0, 0, 0));
         return PageResponse.from(responsePage);
