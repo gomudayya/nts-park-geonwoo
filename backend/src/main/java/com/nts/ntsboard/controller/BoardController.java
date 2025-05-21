@@ -1,14 +1,13 @@
 package com.nts.ntsboard.controller;
 
-import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.common.auth.AuthPrincipal;
+import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.controller.response.BoardSummaryResponse;
 import com.nts.ntsboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

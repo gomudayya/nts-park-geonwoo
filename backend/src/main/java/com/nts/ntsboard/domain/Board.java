@@ -61,4 +61,8 @@ public class Board {
     public String getWriterNickname() {
         return writer.getNickname();
     }
+
+    public Long getWriterId() {
+        return writer.getId();
+    }
 }
