@@ -6,6 +6,7 @@ import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.controller.response.BoardSummaryResponse;
+import com.nts.ntsboard.controller.response.BoardTotalCountResponse;
 import com.nts.ntsboard.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -59,4 +60,8 @@ public class BoardController {
         return ApiResponse.success(boardService.getBoardByPage(pageable), 200);
     }
 
+    @GetMapping("/count")
+    public ApiResponse<BoardTotalCountResponse> getBoardCount() {
+        return ApiResponse.success(boardService.getBoardCount(), 200);
+    }
 }

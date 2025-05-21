@@ -83,4 +83,8 @@ public class BoardRepository {
                 .map(hashtagRepository::findById)
                 .toList();
     }
+
+    public long count() {
+        return boardJpaRepository.count();
+    }
 }
