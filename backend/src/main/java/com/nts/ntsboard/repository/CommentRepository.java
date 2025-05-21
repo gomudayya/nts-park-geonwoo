@@ -2,12 +2,15 @@ package com.nts.ntsboard.repository;
 
 import com.nts.ntsboard.domain.Comment;
 import com.nts.ntsboard.exception.NotFoundException;
+import com.nts.ntsboard.repository.dto.BoardIdCountPair;
 import com.nts.ntsboard.repository.entity.CommentEntity;
 import com.nts.ntsboard.repository.jpa.CommentJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,5 +32,9 @@ public class CommentRepository {
 
     public long count() {
         return commentJpaRepository.count();
+    }
+
+    public List<BoardIdCountPair> countCommentsByBoardIds(List<Long> boardIds) {
+        return commentJpaRepository.countCommentsByBoardIds(boardIds);
     }
 }

@@ -1,9 +1,7 @@
 package com.nts.ntsboard.service;
 
-import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
-import com.nts.ntsboard.controller.response.BoardSummaryResponse;
 import com.nts.ntsboard.controller.response.CountResponse;
 import com.nts.ntsboard.domain.Board;
 import com.nts.ntsboard.domain.Hashtag;
@@ -71,11 +69,9 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public PageResponse<BoardSummaryResponse> getBoardByPage(Pageable pageable) {
+    public Page<Board> getBoardByPage(Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "id"));
-        Page<Board> boardPage = boardRepository.findPage(pageable);
-        Page<BoardSummaryResponse> responsePage = boardPage.map(board -> BoardSummaryResponse.from(board, 0, 0, 0));
-        return PageResponse.from(responsePage);
+        return boardRepository.findPage(pageable);
     }
 
     @Transactional(readOnly = true)
