@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,5 +29,14 @@ public class CommentController {
             @RequestBody CommentWriteRequest request
     ) {
         return ApiResponse.success(commentService.createComment(userId, boardId, request), 201);
+    }
+
+    @PutMapping("/{commentId}")
+    public ApiResponse<CommentResponse> updateComment(
+            @AuthPrincipal Long userId,
+            @PathVariable Long commentId,
+            @RequestBody CommentWriteRequest request
+    ) {
+        return ApiResponse.success(commentService.updateComment(userId, commentId, request), 200);
     }
 }

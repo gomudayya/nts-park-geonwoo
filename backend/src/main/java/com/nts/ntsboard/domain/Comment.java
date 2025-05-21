@@ -34,7 +34,16 @@ public class Comment {
     public Long getWriterId() {
         return writer.getId();
     }
+
     public String getWriterNickname() {
         return writer.getNickname();
+    }
+
+    public boolean isCreatedBy(Long userId) {
+        return getWriterId().equals(userId);
+    }
+
+    public void update(String content) {
+        this.content = content;
     }
 }
