@@ -1,4 +1,4 @@
-package com.nts.ntsboard.util;
+package com.nts.ntsboard.common.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
