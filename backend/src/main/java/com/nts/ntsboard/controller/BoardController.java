@@ -6,8 +6,14 @@ import com.nts.ntsboard.common.response.PageResponse;
 import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.controller.response.BoardSummaryResponse;
+import com.nts.ntsboard.controller.response.CountResponse;
+import com.nts.ntsboard.domain.Board;
+import com.nts.ntsboard.service.BoardLikeService;
 import com.nts.ntsboard.service.BoardService;
+import com.nts.ntsboard.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,23 +26,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/boards")
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardLikeService boardLikeService;
+    private final CommentService commentService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ApiResponse<BoardDetailResponse> createBoard(@RequestBody BoardWriteRequest request,
+    public ApiResponse<BoardDetailResponse> createBoard(@RequestBody @Valid BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
         return ApiResponse.success(boardService.createBoard(userId, request), 201);
     }
 
     @PutMapping("/{boardId}")
     public ApiResponse<BoardDetailResponse> updateBoard(@PathVariable Long boardId,
-                                                        @RequestBody BoardWriteRequest request,
+                                                        @RequestBody @Valid BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
         return ApiResponse.success(boardService.updateBoard(userId, boardId, request), 200);
     }
@@ -55,7 +66,23 @@ public class BoardController {
 
     @GetMapping
     public ApiResponse<PageResponse<BoardSummaryResponse>> getBoards(Pageable pageable) {
-        return ApiResponse.success(boardService.getBoardByPage(pageable), 200);
+        Page<Board> boardPage = boardService.getBoardByPage(pageable);
+        List<Long> boardIds = boardPage.map(Board::getBoardId).toList();
+
+        Map<Long, Long> boardLikeMap = boardLikeService.getBoardLikeMap(boardIds);
+        Map<Long, Long> boardCommentCountsMap = commentService.getBoardCommentCountMap(boardIds);
+
+        Page<BoardSummaryResponse> boardSummaryResponsePage = boardPage.map(board -> BoardSummaryResponse.from(
+                board,
+                boardCommentCountsMap.getOrDefault(board.getBoardId(), 0L),
+                boardLikeMap.getOrDefault(board.getBoardId(), 0L))
+        );
+
+        return ApiResponse.success(PageResponse.from(boardSummaryResponsePage), 200);
     }
 
+    @GetMapping("/count")
+    public ApiResponse<CountResponse> getBoardCount() {
+        return ApiResponse.success(boardService.getBoardCount(), 200);
+    }
 }

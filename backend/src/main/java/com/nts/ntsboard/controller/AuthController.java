@@ -2,7 +2,7 @@ package com.nts.ntsboard.controller;
 
 import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.controller.request.LoginRequest;
-import com.nts.ntsboard.controller.response.UserResponse;
+import com.nts.ntsboard.controller.response.UserInfoResponse;
 import com.nts.ntsboard.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<UserResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+    public ApiResponse<UserInfoResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         return ApiResponse.success(authService.login(loginRequest, response), 200);
     }
 }

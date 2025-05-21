@@ -3,11 +3,13 @@ package com.nts.ntsboard.service;
 import com.nts.ntsboard.common.response.SliceResponse;
 import com.nts.ntsboard.controller.request.CommentWriteRequest;
 import com.nts.ntsboard.controller.response.CommentResponse;
+import com.nts.ntsboard.controller.response.CountResponse;
 import com.nts.ntsboard.domain.Comment;
 import com.nts.ntsboard.domain.User;
 import com.nts.ntsboard.exception.AccessDeniedException;
 import com.nts.ntsboard.repository.CommentRepository;
 import com.nts.ntsboard.repository.UserRepository;
+import com.nts.ntsboard.repository.dto.BoardIdCountPair;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,10 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +68,17 @@ public class CommentService {
         Slice<Comment> commentSlice = commentRepository.findSliceByBoardId(boardId, pageable);
         Slice<CommentResponse> responseSlice = commentSlice.map(CommentResponse::from);
         return SliceResponse.from(responseSlice);
+    }
+
+    @Transactional(readOnly = true)
+    public CountResponse getCommentCount() {
+        long count = commentRepository.count();
+        return CountResponse.from(count);
+    }
+
+    public Map<Long, Long> getBoardCommentCountMap(List<Long> boardIds) {
+        List<BoardIdCountPair> dtos = commentRepository.countCommentsByBoardIds(boardIds);
+        return dtos.stream()
+                .collect(Collectors.toMap(BoardIdCountPair::getBoardId, BoardIdCountPair::getCount));
     }
 }
