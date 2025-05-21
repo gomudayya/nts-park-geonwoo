@@ -7,6 +7,7 @@ import com.nts.ntsboard.controller.request.BoardWriteRequest;
 import com.nts.ntsboard.controller.response.BoardDetailResponse;
 import com.nts.ntsboard.controller.response.BoardSummaryResponse;
 import com.nts.ntsboard.service.BoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -29,14 +30,14 @@ public class BoardController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ApiResponse<BoardDetailResponse> createBoard(@RequestBody BoardWriteRequest request,
+    public ApiResponse<BoardDetailResponse> createBoard(@RequestBody @Valid BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
         return ApiResponse.success(boardService.createBoard(userId, request), 201);
     }
 
     @PutMapping("/{boardId}")
     public ApiResponse<BoardDetailResponse> updateBoard(@PathVariable Long boardId,
-                                                        @RequestBody BoardWriteRequest request,
+                                                        @RequestBody @Valid BoardWriteRequest request,
                                                         @AuthPrincipal Long userId) {
         return ApiResponse.success(boardService.updateBoard(userId, boardId, request), 200);
     }
