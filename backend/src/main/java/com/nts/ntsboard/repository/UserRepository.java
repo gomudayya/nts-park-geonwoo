@@ -25,4 +25,8 @@ public class UserRepository {
     public Optional<User> findByUsername(String username) {
         return userJpaRepository.findByUsername(username).map(UserEntity::toModel);
     }
+
+    public boolean existByNickname(String nickname) {
+        return userJpaRepository.existsByNickname(nickname);
+    }
 }

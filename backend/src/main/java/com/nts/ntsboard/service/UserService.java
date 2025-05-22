@@ -3,8 +3,8 @@ package com.nts.ntsboard.service;
 import com.nts.ntsboard.controller.request.SignUpRequest;
 import com.nts.ntsboard.controller.response.UserInfoResponse;
 import com.nts.ntsboard.domain.User;
+import com.nts.ntsboard.exception.DuplicatedResourceException;
 import com.nts.ntsboard.repository.UserRepository;
-import jakarta.transaction.TransactionScoped;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,8 @@ public class UserService {
 
     @Transactional
     public UserInfoResponse signUp(SignUpRequest signUpRequest) {
+        checkDuplicatedResourceException(signUpRequest);
+
         String encodedPassword = passwordEncoder.encode(signUpRequest.password());
         User user = User.builder()
                 .username(signUpRequest.username())
@@ -28,6 +30,15 @@ public class UserService {
 
         user = userRepository.save(user);
         return UserInfoResponse.from(user);
+    }
+
+    private void checkDuplicatedResourceException(SignUpRequest signUpRequest) {
+        if (userRepository.findByUsername(signUpRequest.username()).isPresent()) {
+            throw new DuplicatedResourceException("아이디");
+        }
+        if (userRepository.existByNickname(signUpRequest.nickname())) {
+            throw new DuplicatedResourceException("닉네임");
+        }
     }
 
     @Transactional(readOnly = true)

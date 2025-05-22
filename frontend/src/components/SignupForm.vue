@@ -57,9 +57,17 @@ export default {
         password: this.password,
         nickname: this.nickname,
       };
-      await signUpApi(request);
-      this.initForm();
-      this.$router.push('/signup-success');
+      try {
+        await signUpApi(request);
+        this.initForm();
+        this.$router.push('/signup-success');
+      } catch (error) {
+        if (error.response && error.response.status === 409) {
+          alert('다른 아이디나 닉네임을 사용하여 주세요');
+        } else {
+          console.error(error);
+        }
+      }
     },
     initForm() {
       this.username = '';
