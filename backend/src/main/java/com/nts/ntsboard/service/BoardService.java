@@ -72,7 +72,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Page<Board> getBoardByPage(Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "id"));
-        return boardRepository.findPage(pageable);
+        return boardRepository.findPageWithNoHashtag(pageable);
     }
 
     @Transactional(readOnly = true)

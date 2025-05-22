@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,7 +59,12 @@ public class BoardRepository {
         boardHashtagJpaRepository.deleteAllByBoardId(boardId);
     }
 
-    public Page<Board> findPage(Pageable pageable) {
+    public Page<Board> findPageWithNoHashtag(Pageable pageable) {
+        Page<BoardEntity> boardEntities = boardJpaRepository.findAll(pageable);
+        return boardEntities.map(boardEntity -> boardEntity.toModel(Collections.emptyList()));
+    }
+
+    public Page<Board> findPageWithHashtags(Pageable pageable) {
         Page<BoardEntity> boardEntities = boardJpaRepository.findAll(pageable);
         List<Long> boardIds = boardEntities.map(BoardEntity::getId).toList();
         List<BoardHashtagEntity> boardHashtagEntities = boardHashtagJpaRepository.findByBoardIdIn(boardIds);
@@ -79,6 +85,7 @@ public class BoardRepository {
     }
 
     private List<Hashtag> findByHashtagIds(List<Long> hashtagIds) {
+        if (hashtagIds == null) return Collections.emptyList();
         return hashtagIds.stream()
                 .map(hashtagRepository::findById)
                 .toList();
