@@ -22,6 +22,8 @@ Repository를 clone 합니다. `git clone https://github.com/gomudayya/nts-park-
 
 MySQL 3306 포트에 `ntsboard` 데이터베이스를 생성합니다 (username : root, password : 1234)
 
+이후 schema.sql에 있는 DDL 쿼리를 실행합니다.
+
 #### 백엔드 실행
 ```
 cd backend
