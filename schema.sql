@@ -25,17 +25,11 @@ CREATE TABLE board_hashtag (
                                hashtag_id BIGINT NULL
 );
 
-CREATE INDEX idx_board_id ON board_hashtag (board_id);
-CREATE INDEX idx_hashtag_id ON board_hashtag (hashtag_id);
-
 CREATE TABLE board_like (
                             id       BIGINT AUTO_INCREMENT PRIMARY KEY,
                             board_id BIGINT NULL,
                             user_id  BIGINT NULL
 );
-
-CREATE INDEX idx_board_user ON board_like (board_id, user_id);
-CREATE INDEX idx_user_id ON board_like (user_id);
 
 CREATE TABLE comment (
                          id           BIGINT AUTO_INCREMENT PRIMARY KEY,
