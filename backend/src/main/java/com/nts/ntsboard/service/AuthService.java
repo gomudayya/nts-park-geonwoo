@@ -3,7 +3,7 @@ package com.nts.ntsboard.service;
 import com.nts.ntsboard.controller.request.LoginRequest;
 import com.nts.ntsboard.controller.response.UserInfoResponse;
 import com.nts.ntsboard.domain.User;
-import com.nts.ntsboard.exception.InvalidLoginException;
+import com.nts.ntsboard.exception.InvalidAuthentication;
 import com.nts.ntsboard.repository.UserRepository;
 import com.nts.ntsboard.common.auth.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,10 +21,10 @@ public class AuthService {
 
     public UserInfoResponse login(LoginRequest loginRequest, HttpServletResponse response) {
         User user = userRepository.findByUsername(loginRequest.username())
-                .orElseThrow(InvalidLoginException::new);
+                .orElseThrow(InvalidAuthentication::new);
 
         if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
-            throw new InvalidLoginException();
+            throw new InvalidAuthentication();
         }
 
         String token = jwtUtil.createToken(user.getId());
