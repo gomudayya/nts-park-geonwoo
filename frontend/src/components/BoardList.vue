@@ -15,7 +15,7 @@
         <tr
           v-for="board in boards"
           :key="board.id"
-          @click="goToBoardDetail(board.id)"
+          @click="goToBoardDetail(board.boardId)"
           style="cursor: pointer"
         >
           <td

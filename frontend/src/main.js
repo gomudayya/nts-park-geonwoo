@@ -11,6 +11,7 @@ async function initApp() {
     try {
       const userInfo = await getMyInfoApi();
       store.commit('setNickname', userInfo.data.content.nickname);
+      store.commit('setUserId', userInfo.data.content.userId);
     } catch (error) {
       console.warn('토큰 만료 또는 유효하지 않음:', error);
       localStorage.removeItem('accessToken');

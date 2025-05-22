@@ -28,6 +28,10 @@ const router = createRouter({
       component: () => import('@/views/BoardEditPage.vue'),
       props: true,
     },
+    {
+      path: '/boards/:id',
+      component: () => import('@/views/BoardDetailPage.vue'),
+    },
   ],
 });
 

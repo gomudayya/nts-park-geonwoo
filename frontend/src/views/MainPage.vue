@@ -17,7 +17,7 @@
 
 <script>
 import BoardList from '@/components/BoardList.vue';
-import PageBox from '@/components/PageBox.vue';
+import PageBox from '@/components/common/PageBox.vue';
 import { fetchBoardsApi } from '@/api';
 import { mapState } from 'vuex';
 

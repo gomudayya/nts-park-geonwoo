@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.$store.commit('clearNickname');
+      this.$store.commit('clearUserInfo');
       localStorage.removeItem('accessToken');
       this.$router.push('/');
     },

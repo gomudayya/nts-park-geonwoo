@@ -39,4 +39,24 @@ function fetchBoardDetailApi(boardId) {
   return api.get(`/boards/${boardId}`);
 }
 
+export function fetchLikeCount(boardId) {
+  return api.get(`/boards/${boardId}/likes/count`);
+}
+
+export function fetchMyLikeStatus(boardId) {
+  return api.get(`/boards/${boardId}/likes/me`);
+}
+
+export function createBoardLike(boardId) {
+  return api.post(`/boards/${boardId}/likes`);
+}
+
+export function deleteBoardLike(boardId) {
+  return api.delete(`/boards/${boardId}/likes`);
+}
+
+export function deleteBoard(boardId) {
+  return api.delete(`/boards/${boardId}`);
+}
+
 export { fetchBoardDetailApi };
