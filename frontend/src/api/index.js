@@ -35,28 +35,45 @@ export function updateBoardApi(boardId, payload) {
   return api.put(`/boards/${boardId}`, payload);
 }
 
-function fetchBoardDetailApi(boardId) {
+export function fetchBoardDetailApi(boardId) {
   return api.get(`/boards/${boardId}`);
 }
 
-export function fetchLikeCount(boardId) {
+export function fetchLikeCountApi(boardId) {
   return api.get(`/boards/${boardId}/likes/count`);
 }
 
-export function fetchMyLikeStatus(boardId) {
+export function fetchMyLikeStatusApi(boardId) {
   return api.get(`/boards/${boardId}/likes/me`);
 }
 
-export function createBoardLike(boardId) {
+export function createBoardLikeApi(boardId) {
   return api.post(`/boards/${boardId}/likes`);
 }
 
-export function deleteBoardLike(boardId) {
+export function deleteBoardLikeApi(boardId) {
   return api.delete(`/boards/${boardId}/likes`);
 }
 
-export function deleteBoard(boardId) {
+export function deleteBoardApi(boardId) {
   return api.delete(`/boards/${boardId}`);
 }
 
-export { fetchBoardDetailApi };
+export function createCommentApi(boardId, comment) {
+  return api.post(`/boards/${boardId}/comments`, {
+    content: comment,
+  });
+}
+
+export function fetchCommentsApi(boardId, page = 0, size = 5) {
+  return api.get(`/boards/${boardId}/comments`, {
+    params: {
+      page,
+      size,
+    },
+  });
+}
+
+export function deleteCommentApi(boardId, commentId) {
+  return api.delete(`/boards/${boardId}/comments/${commentId}`);
+}

@@ -7,18 +7,21 @@
     @like="handleLikeClick"
     @delete="deleteBoard"
   ></BoardDetail>
+  <CommentList @submitComment="createComment"> </CommentList>
 </template>
 
 <script>
 import {
   fetchBoardDetailApi,
-  fetchLikeCount,
-  fetchMyLikeStatus,
-  createBoardLike,
-  deleteBoardLike,
-  deleteBoard,
+  fetchLikeCountApi,
+  fetchMyLikeStatusApi,
+  createBoardLikeApi,
+  deleteBoardLikeApi,
+  deleteBoardApi,
+  createCommentApi,
 } from '@/api';
 import BoardDetail from '@/components/BoardDetail.vue';
+import CommentList from '@/components/CommentList.vue';
 export default {
   data() {
     return {
@@ -33,11 +36,11 @@ export default {
       const boardResponse = await fetchBoardDetailApi(boardId);
       this.board = boardResponse.data.content;
 
-      const likeCountResponse = await fetchLikeCount(boardId);
+      const likeCountResponse = await fetchLikeCountApi(boardId);
       this.likeCount = likeCountResponse.data.content.count;
 
       if (this.isLoggedIn) {
-        const likeStatusResponse = await fetchMyLikeStatus(boardId);
+        const likeStatusResponse = await fetchMyLikeStatusApi(boardId);
         this.likeStatus = likeStatusResponse.data.content.liked;
       }
     } catch (error) {
@@ -49,10 +52,10 @@ export default {
       try {
         const boardId = this.$route.params.id;
         if (this.likeStatus) {
-          await deleteBoardLike(boardId);
+          await deleteBoardLikeApi(boardId);
           this.likeCount--;
         } else {
-          await createBoardLike(boardId);
+          await createBoardLikeApi(boardId);
           this.likeCount++;
         }
         this.likeStatus = !this.likeStatus;
@@ -63,9 +66,18 @@ export default {
 
     async deleteBoard() {
       try {
-        await deleteBoard(this.$route.params.id);
+        await deleteBoardApi(this.$route.params.id);
       } catch (error) {
         console.error('게시글 삭제중 에러 발생', error);
+      }
+    },
+
+    async createComment(content) {
+      try {
+        const boardId = this.$route.params.id;
+        await createCommentApi(boardId, content);
+      } catch (error) {
+        console.error('댓글 작성중 에러 발생', error);
       }
     },
   },
@@ -76,6 +88,7 @@ export default {
   },
   components: {
     BoardDetail,
+    CommentList,
   },
 };
 </script>
