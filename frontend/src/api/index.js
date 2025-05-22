@@ -26,3 +26,17 @@ export function getMyInfoApi() {
 export function fetchBoardsApi(pageParam) {
   return api.get('/boards', { params: pageParam });
 }
+
+export function createBoardApi(payload) {
+  return api.post('/boards', payload);
+}
+
+export function updateBoardApi(boardId, payload) {
+  return api.put(`/boards/${boardId}`, payload);
+}
+
+function fetchBoardDetailApi(boardId) {
+  return api.get(`/boards/${boardId}`);
+}
+
+export { fetchBoardDetailApi };

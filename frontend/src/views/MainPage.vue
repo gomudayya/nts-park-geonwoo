@@ -1,6 +1,6 @@
 <template>
   <BoardList :boards="boards" />
-  <Pagination
+  <PageBox
     :page-number="pageNumber"
     :total-pages="totalPages"
     @page-changed="handlePageChange"
@@ -9,7 +9,7 @@
 
 <script>
 import BoardList from '@/components/BoardList.vue';
-import Pagination from '@/components/Pagination.vue';
+import PageBox from '@/components/PageBox.vue';
 import { fetchBoardsApi } from '@/api';
 
 export default {
@@ -24,7 +24,7 @@ export default {
   },
   components: {
     BoardList,
-    Pagination,
+    PageBox,
   },
   watch: {
     '$route.query.pageNumber': {
