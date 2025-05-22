@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:5173")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
+                .exposedHeaders("Authorization")
                 .allowCredentials(true) // 쿠키 허용
                 .maxAge(3600);// preflight 캐시 시간 (초)
     }
