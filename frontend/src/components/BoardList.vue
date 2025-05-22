@@ -1,0 +1,78 @@
+<template>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일시</th>
+          <th>댓글 수</th>
+          <th>조회수</th>
+          <th>좋아요 수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="board in boards"
+          :key="board.id"
+          @click="goToBoardDetail(board.id)"
+          style="cursor: pointer"
+        >
+          <td>{{ board.title }}</td>
+          <td>{{ board.writerNickname }}</td>
+          <td>{{ formatDate(board.createdTime) }}</td>
+          <td>{{ board.commentCount }}</td>
+          <td>{{ board.viewCount }}</td>
+          <td>{{ board.likeCount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import router from '@/router';
+
+export default {
+  props: {
+    boards: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  methods: {
+    goToBoardDetail(boardId) {
+      router.push(`/boards/${boardId}`);
+    },
+    formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleString(undefined, {
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+    },
+  },
+};
+</script>
+
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+thead th {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+tbody td {
+  border-bottom: 1px solid #eee;
+  padding: 8px;
+}
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+</style>
