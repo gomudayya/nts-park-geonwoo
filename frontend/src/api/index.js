@@ -77,3 +77,11 @@ export function fetchCommentsApi(boardId, page = 0, size = 5) {
 export function deleteCommentApi(boardId, commentId) {
   return api.delete(`/boards/${boardId}/comments/${commentId}`);
 }
+
+export function fetchTotalCommentCountApi() {
+  return api.get('/comments/count');
+}
+
+export function fetchTotalBoardCountApi() {
+  return api.get('/boards/count');
+}

@@ -50,6 +50,7 @@ export default {
   methods: {
     async handleLikeClick() {
       try {
+        if (!this.isLoggedIn) return;
         const boardId = this.$route.params.id;
         if (this.likeStatus) {
           await deleteBoardLikeApi(boardId);

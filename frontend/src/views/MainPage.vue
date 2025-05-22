@@ -1,4 +1,8 @@
 <template>
+  <div class="summary-info">
+    전체 게시글 수: {{ totalBoardCount }}개 | 전체 댓글 수:
+    {{ totalCommentCount }}개
+  </div>
   <BoardList :boards="boards" />
   <template v-if="nickname">
     <div class="button-container">
@@ -18,7 +22,11 @@
 <script>
 import BoardList from '@/components/BoardList.vue';
 import PageBox from '@/components/common/PageBox.vue';
-import { fetchBoardsApi } from '@/api';
+import {
+  fetchBoardsApi,
+  fetchTotalCommentCountApi,
+  fetchTotalBoardCountApi,
+} from '@/api';
 import { mapState } from 'vuex';
 
 export default {
@@ -32,6 +40,8 @@ export default {
       pageSize: 10,
       totalElements: 0,
       totalPages: 0,
+      totalBoardCount: 0,
+      totalCommentCount: 0,
     };
   },
   components: {
@@ -66,6 +76,20 @@ export default {
         query: { ...this.$route.query, pageNumber: newPage + 1 },
       });
     },
+    async loadBoardAndCommentCount() {
+      try {
+        let response = await fetchTotalBoardCountApi();
+        this.totalBoardCount = response.data.content.count;
+
+        response = await fetchTotalCommentCountApi();
+        this.totalCommentCount = response.data.content.count;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  mounted() {
+    this.loadBoardAndCommentCount();
   },
 };
 </script>
@@ -90,5 +114,9 @@ export default {
   user-select: none;
   white-space: nowrap;
   transition: background-color 0.3s ease;
+}
+.summary-info {
+  font-size: 1rem;
+  font-weight: 500;
 }
 </style>
