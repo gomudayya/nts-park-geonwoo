@@ -1,5 +1,13 @@
 <template>
   <BoardList :boards="boards" />
+  <template v-if="nickname">
+    <div class="button-container">
+      <router-link to="/boards/create" class="button">
+        글 작성하기
+      </router-link>
+    </div>
+  </template>
+
   <PageBox
     :page-number="pageNumber"
     :total-pages="totalPages"
@@ -11,8 +19,12 @@
 import BoardList from '@/components/BoardList.vue';
 import PageBox from '@/components/PageBox.vue';
 import { fetchBoardsApi } from '@/api';
+import { mapState } from 'vuex';
 
 export default {
+  computed: {
+    ...mapState(['nickname']),
+  },
   data() {
     return {
       boards: [],
@@ -58,4 +70,25 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 8px 12px;
+  min-width: 100px;
+  max-width: fit-content;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+</style>
