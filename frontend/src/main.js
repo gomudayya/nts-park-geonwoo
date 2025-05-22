@@ -2,14 +2,14 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
 import store from '@/store';
-import { fetchUserInfo } from '@/api';
+import { getMyInfoApi } from '@/api';
 
 async function initApp() {
   const accessToken = localStorage.getItem('accessToken');
 
   if (accessToken) {
     try {
-      const userInfo = await fetchUserInfo();
+      const userInfo = await getMyInfoApi();
       store.commit('setNickname', userInfo.data.content.nickname);
     } catch (error) {
       console.warn('토큰 만료 또는 유효하지 않음:', error);

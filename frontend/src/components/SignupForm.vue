@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { signUp } from '@/api/index';
+import { signUpApi } from '@/api/index';
 
 export default {
   data() {
@@ -57,7 +57,7 @@ export default {
         password: this.password,
         nickname: this.nickname,
       };
-      await signUp(request);
+      await signUpApi(request);
       this.initForm();
       this.$router.push('/signup-success');
     },
