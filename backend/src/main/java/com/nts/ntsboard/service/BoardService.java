@@ -61,10 +61,11 @@ public class BoardService {
         boardRepository.deleteById(boardId);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public BoardDetailResponse getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId);
         board.increaseViewCount();
+        board = boardRepository.save(board);
         return BoardDetailResponse.from(board);
     }
 
