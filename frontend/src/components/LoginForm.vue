@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { login } from '@/api/index';
+import { loginApi } from '@/api/index';
 
 export default {
   data() {
@@ -49,8 +49,10 @@ export default {
       };
 
       try {
-        const { data } = await login(request);
-        this.$store.commit('setNickname', data.content.nickname);
+        const response = await loginApi(request);
+        const accessToken = response.headers['authorization'];
+        localStorage.setItem('accessToken', accessToken);
+        this.$store.commit('setNickname', response.data.content.nickname);
         this.$router.push('/');
         this.init();
       } catch (e) {

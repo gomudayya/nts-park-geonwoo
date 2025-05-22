@@ -10,6 +10,9 @@ const store = createStore({
     setNickname(state, nickname) {
       state.nickname = nickname;
     },
+    clearNickname(state) {
+      state.nickname = '';
+    },
   },
 });
 
