@@ -4,14 +4,27 @@ const store = createStore({
   state() {
     return {
       nickname: '',
+      userId: '',
     };
   },
   mutations: {
     setNickname(state, nickname) {
       state.nickname = nickname;
     },
-    clearNickname(state) {
+    clearUserInfo(state) {
       state.nickname = '';
+      state.userId = '';
+    },
+    setUserId(state, userId) {
+      state.userId = userId;
+    },
+  },
+  getters: {
+    isLoggedIn(state) {
+      return !!state.nickname;
+    },
+    userId(state) {
+      return state.userId;
     },
   },
 });

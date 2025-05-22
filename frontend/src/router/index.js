@@ -17,7 +17,20 @@ const router = createRouter({
     },
     {
       path: '/signup-success',
-      component: () => import('@/views/SignupSuccess.vue'),
+      component: () => import('@/views/SignupSuccessPage.vue'),
+    },
+    {
+      path: '/boards/create',
+      component: () => import('@/views/BoardCreatePage.vue'),
+    },
+    {
+      path: '/boards/edit/:id',
+      component: () => import('@/views/BoardEditPage.vue'),
+      props: true,
+    },
+    {
+      path: '/boards/:id',
+      component: () => import('@/views/BoardDetailPage.vue'),
     },
   ],
 });

@@ -53,6 +53,7 @@ export default {
         const accessToken = response.headers['authorization'];
         localStorage.setItem('accessToken', accessToken);
         this.$store.commit('setNickname', response.data.content.nickname);
+        this.$store.commit('setUserId', response.data.content.userId);
         this.$router.push('/');
         this.init();
       } catch (e) {

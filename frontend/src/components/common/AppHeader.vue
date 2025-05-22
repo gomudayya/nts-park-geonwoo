@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     logoutUser() {
-      this.$store.commit('clearNickname');
+      this.$store.commit('clearUserInfo');
       localStorage.removeItem('accessToken');
       this.$router.push('/');
     },
@@ -68,5 +68,9 @@ export default {
   color: white;
   font-weight: 600;
   font-size: 1rem;
+  line-height: 1; /* 줄 간격 줄이기 */
+  vertical-align: middle; /* 아이콘/버튼과 수직 정렬 맞추기 */
+  margin-right: 12px;
+  padding-top: 5px; /* 텍스트를 약간 내림 */
 }
 </style>
