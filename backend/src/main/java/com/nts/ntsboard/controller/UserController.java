@@ -1,5 +1,6 @@
 package com.nts.ntsboard.controller;
 
+import com.nts.ntsboard.common.auth.AuthPrincipal;
 import com.nts.ntsboard.common.response.ApiResponse;
 import com.nts.ntsboard.controller.request.SignUpRequest;
 import com.nts.ntsboard.controller.response.UserInfoResponse;
@@ -7,6 +8,7 @@ import com.nts.ntsboard.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,5 +26,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<UserInfoResponse> signUp(@RequestBody @Valid SignUpRequest signupRequest) {
         return ApiResponse.success(userService.signUp(signupRequest), 201);
+    }
+
+    @GetMapping("/me")
+    public ApiResponse<UserInfoResponse> getMyInfo(@AuthPrincipal Long userId) {
+        return ApiResponse.success(userService.getUser(userId), 200);
     }
 }

@@ -29,7 +29,8 @@ public class AuthorizationFilter implements Filter {
         String token = authHeader.substring(JwtUtil.BEARER_PREFIX.length());
         if (!jwtUtil.validateToken(token)) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpResponse.getWriter().write("유효하지 않은 토큰입니다.");
+            httpResponse.getWriter().write("invalid token");
+            return;
         }
 
         Long userId = jwtUtil.getUserId(token);

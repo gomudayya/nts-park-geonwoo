@@ -61,17 +61,18 @@ public class BoardService {
         boardRepository.deleteById(boardId);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public BoardDetailResponse getBoard(Long boardId) {
         Board board = boardRepository.findById(boardId);
         board.increaseViewCount();
+        board = boardRepository.save(board);
         return BoardDetailResponse.from(board);
     }
 
     @Transactional(readOnly = true)
     public Page<Board> getBoardByPage(Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "id"));
-        return boardRepository.findPage(pageable);
+        return boardRepository.findPageWithNoHashtag(pageable);
     }
 
     @Transactional(readOnly = true)
