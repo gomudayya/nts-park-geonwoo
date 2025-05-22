@@ -37,7 +37,7 @@
 
 <script>
 import router from '@/router';
-
+import { formatDateUtil } from '@/util/date';
 export default {
   props: {
     boards: {
@@ -50,14 +50,7 @@ export default {
       router.push(`/boards/${boardId}`);
     },
     formatDate(dateStr) {
-      const date = new Date(dateStr);
-      return date.toLocaleString(undefined, {
-        month: 'numeric',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      });
+      return formatDateUtil(dateStr);
     },
     isNewBoard(board) {
       const created = new Date(board.createdTime);

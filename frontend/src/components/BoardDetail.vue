@@ -31,6 +31,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { formatDateUtil } from '@/util/date';
 
 export default {
   name: 'BoardDetail',
@@ -51,8 +52,7 @@ export default {
   emits: ['like'],
   methods: {
     formatDate(dateStr) {
-      const date = new Date(dateStr);
-      return date.toLocaleString();
+      return formatDateUtil(dateStr);
     },
     goToEditPage() {
       this.$router.push(`/boards/edit/${this.board.boardId}`);
@@ -90,6 +90,9 @@ export default {
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 24px;
+}
+.date {
+  margin-left: 15px;
 }
 .hashtags {
   margin-bottom: 16px;

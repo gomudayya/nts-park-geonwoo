@@ -9,7 +9,7 @@
         ><strong>{{ comment.writerNickname }}</strong></p
       >
       <p>{{ comment.content }}</p>
-      <small>{{ comment.createdTime }}</small>
+      <small>{{ formatDate(comment.createdTime) }}</small>
       <div v-if="comment.writerId === currentUserId" class="comment-actions">
         <button @click="deleteComment(comment.commentId)">삭제</button>
       </div>
@@ -28,7 +28,7 @@
 
 <script>
 import { fetchCommentsApi, deleteCommentApi } from '@/api';
-
+import { formatDateUtil } from '@/util/date';
 export default {
   emits: ['submitComment'],
   data() {
@@ -44,6 +44,9 @@ export default {
     this.loadComments();
   },
   methods: {
+    formatDate(dateStr) {
+      return formatDateUtil(dateStr);
+    },
     async submitComment() {
       if (!this.commentText.trim()) return;
       this.$emit('submitComment', this.commentText.trim());
