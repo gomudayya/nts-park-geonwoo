@@ -18,7 +18,10 @@
           @click="goToBoardDetail(board.id)"
           style="cursor: pointer"
         >
-          <td>{{ board.title }}</td>
+          <td
+            >{{ board.title }}
+            <span v-if="isNewBoard(board)" class="new-badge">New</span>
+          </td>
           <td>{{ board.writerNickname }}</td>
           <td>{{ formatDate(board.createdTime) }}</td>
           <td>{{ board.commentCount }}</td>
@@ -55,6 +58,13 @@ export default {
         hour12: false,
       });
     },
+    isNewBoard(board) {
+      const created = new Date(board.createdTime);
+      const now = new Date();
+      const diffMs = now - created;
+      const diffDays = diffMs / (1000 * 60 * 60 * 24);
+      return diffDays <= 3;
+    },
   },
 };
 </script>
@@ -74,5 +84,16 @@ tbody td {
 }
 tbody tr:hover {
   background-color: #f9f9f9;
+}
+.new-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  background-color: #ff3b30; /* 빨강 */
+  color: white;
+  border-radius: 12px;
+  font-weight: bold;
+  vertical-align: middle;
 }
 </style>
