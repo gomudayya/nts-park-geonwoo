@@ -1,4 +1,4 @@
-FROM gradle:8.4-jdk21-alpine AS build
+FROM gradle:8.4-jdk21 AS build
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . .
 RUN gradle clean build -x test --no-daemon
 
 
-FROM amazoncorretto:21-alpine-jdk
+FROM amazoncorretto:21
 
 WORKDIR /app
 
