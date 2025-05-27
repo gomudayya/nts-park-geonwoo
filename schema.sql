@@ -156,7 +156,7 @@ CREATE TABLE comment (
 -- ('Content 77', '2022-03-18 15:00:00', 'Title 77', 176, 17),
 -- ('Content 78', '2022-03-19 16:00:00', 'Title 78', 177, 18),
 -- ('Content 79', '2022-03-20 17:00:00', 'Title 79', 178, 19),
--- ('Content 80', '2022-03-21 18:00:00', 'Title 80', 179, 20),
+-- ('Content 80', '2022-03-21 18:00:00', 'Title 80', 179, 20);
 
 -- -- 댓글 40개
 -- INSERT INTO comment (board_id, content, created_time, is_deleted, user_id) VALUES
